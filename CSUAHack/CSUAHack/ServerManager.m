@@ -78,7 +78,7 @@ static ServerManager *sharedManager = nil;
 -(void) postAnalytic:(NSMutableArray*)allEvents {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     self.postAnalytic = [[ServerConnection alloc] init];
-    self.postAnalytic.type = ServerConnectionTypeGetEvents;
+    self.postAnalytic.type = ServerConnectionTypePostAnalytic;
     self.postAnalytic.responseData = [[NSMutableData alloc] init];
     NSString *requestString = kPostAnalytic;
 
@@ -225,7 +225,6 @@ static ServerManager *sharedManager = nil;
             failed = YES;
         }
         else {
-            NSLog(@"responseInfo: %@", responseInfo);
             NSMutableArray* allEvents = [[NSMutableArray alloc] init];
             NSString* orgName = [responseInfo valueForKey:@"org_name"];
             NSArray* allEventsinJSON = [responseInfo valueForKey:@"events"];
