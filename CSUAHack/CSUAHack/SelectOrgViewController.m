@@ -9,6 +9,7 @@
 #import "SelectOrgViewController.h"
 #import "OrgPersonViewController.h"
 #import "OrganizationObj.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SelectOrgViewController ()
 
@@ -80,6 +81,10 @@
     headerLabel.font = [UIFont boldSystemFontOfSize:18];
     headerLabel.text = @"   Organizations";
     headerLabel.textColor = [UIColor whiteColor];
+    [headerLabel.layer setShadowOpacity:1.0];
+    [headerLabel.layer setShadowRadius:1.0];
+    [headerLabel.layer setShadowColor:[UIColor blackColor].CGColor];
+    [headerLabel.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
    // headerLabel.textAlignment = NSTextAlignmentCenter;
     UIView* view = [[UIView alloc] init];
     [view setBackgroundColor:[UIColor greenColor]];

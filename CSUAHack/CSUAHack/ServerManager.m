@@ -92,6 +92,7 @@ static ServerManager *sharedManager = nil;
         [postDict setValue:event.eventName forKey:@"event_name"];
         [allPostEvents addObject:postDict];
     }
+    NSLog(@"eventData: %@", allPostEvents);
     NSError *error;
     NSData* postData = [NSJSONSerialization dataWithJSONObject:allPostEvents
                                                                            options:NSJSONWritingPrettyPrinted

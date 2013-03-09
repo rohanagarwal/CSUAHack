@@ -11,6 +11,7 @@
 #import "CSUAType.h"
 #import "EventObj.h"
 #import "EventCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface OrgPersonViewController ()
 
@@ -36,6 +37,16 @@
     self.navigationItem.rightBarButtonItem = sendButton;
     
     [self configureBump];
+    
+    [self.connectedState.layer setShadowOpacity:1.0];
+    [self.connectedState.layer setShadowRadius:1.0];
+    [self.connectedState.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.connectedState.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
+    
+    [self.connectedDescription.layer setShadowOpacity:1.0];
+    [self.connectedDescription.layer setShadowRadius:1.0];
+    [self.connectedDescription.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.connectedDescription.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]];
 
@@ -131,6 +142,10 @@
     headerLabel.font = [UIFont boldSystemFontOfSize:18];
     headerLabel.text = @"   Events";
     headerLabel.textColor = [UIColor whiteColor];
+    [headerLabel.layer setShadowOpacity:1.0];
+    [headerLabel.layer setShadowRadius:1.0];
+    [headerLabel.layer setShadowColor:[UIColor blackColor].CGColor];
+    [headerLabel.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
     // headerLabel.textAlignment = NSTextAlignmentCenter;
     UIView* view = [[UIView alloc] init];
     [view setBackgroundColor:[UIColor greenColor]];
@@ -160,6 +175,32 @@
     cell.endDate.text = [obj StringEndDate];
     cell.endDate.font = [UIFont systemFontOfSize:12.0];
     cell.endDate.textColor = [UIColor blackColor];
+    
+    [cell.organizationLabel.layer setShadowOpacity:1.0];
+    [cell.organizationLabel.layer setShadowRadius:1.0];
+    [cell.organizationLabel.layer setShadowColor:[UIColor blackColor].CGColor];
+    [cell.organizationLabel.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
+    
+    [cell.nameLabel.layer setShadowOpacity:1.0];
+    [cell.nameLabel.layer setShadowRadius:1.0];
+    [cell.nameLabel.layer setShadowColor:[UIColor blackColor].CGColor];
+    [cell.nameLabel.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
+    
+    [cell.locationLabel.layer setShadowOpacity:1.0];
+    [cell.locationLabel.layer setShadowRadius:1.0];
+    [cell.locationLabel.layer setShadowColor:[UIColor blackColor].CGColor];
+    [cell.locationLabel.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
+    
+    [cell.startDate.layer setShadowOpacity:1.0];
+    [cell.startDate.layer setShadowRadius:1.0];
+    [cell.startDate.layer setShadowColor:[UIColor blackColor].CGColor];
+    [cell.startDate.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
+    
+    [cell.endDate.layer setShadowOpacity:1.0];
+    [cell.endDate.layer setShadowRadius:1.0];
+    [cell.endDate.layer setShadowColor:[UIColor blackColor].CGColor];
+    [cell.endDate.layer setShadowOffset:CGSizeMake(-0.5, 0.5)];
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

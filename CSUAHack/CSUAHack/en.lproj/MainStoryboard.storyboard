@@ -84,7 +84,9 @@
                     <navigationItem key="navigationItem" title="Select Account" id="Kn2-Nc-Uoy"/>
                     <connections>
                         <outlet property="individual" destination="8pi-gY-TlI" id="TUI-ge-Bpn"/>
+                        <outlet property="individualText" destination="WCf-gp-K13" id="QQY-Va-yOO"/>
                         <outlet property="organization" destination="j3M-fp-bfU" id="al6-41-qIA"/>
+                        <outlet property="organizationText" destination="EzV-8O-gDY" id="ath-Mo-t6x"/>
                         <segue destination="GlK-eU-BhY" kind="push" identifier="toPerson" id="crU-UZ-e58"/>
                         <segue destination="Zod-vi-lFa" kind="push" identifier="toSelectOrg" id="d8l-6U-Iwc"/>
                     </connections>
