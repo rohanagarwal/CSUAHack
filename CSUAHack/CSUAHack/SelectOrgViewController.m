@@ -23,12 +23,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(toOrgMemberPage)];
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(toOrgMemberPage)];
     self.navigationItem.rightBarButtonItem = doneButton;
     
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    UIView* background = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    background.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]];
+    [self.tableView setBackgroundView:background];
+    [self.tableView setBackgroundColor:[UIColor clearColor]];
     
     self.allOrganizations = [[NSMutableArray alloc] init];
 }
@@ -40,6 +44,7 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO];
     [[ServerManager sharedManager] getOrganizations:self];
 }
 
@@ -64,6 +69,23 @@
     cell.textLabel.text = ((OrganizationObj*)[self.allOrganizations objectAtIndex:indexPath.row]).orgName;
     return cell;
 }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"Organizations";
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {// custom view for header. will be adjusted to default or specified header height
+    UILabel* headerLabel = [[UILabel alloc] init];
+    headerLabel.frame = CGRectMake(30, 0, 300, 40);
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = [UIColor blackColor];
+    headerLabel.font = [UIFont boldSystemFontOfSize:18];
+    headerLabel.text = @"   Organizations";
+    headerLabel.textColor = [UIColor whiteColor];
+   // headerLabel.textAlignment = NSTextAlignmentCenter;
+    UIView* view = [[UIView alloc] init];
+    [view setBackgroundColor:[UIColor greenColor]];
+    return headerLabel;
+}
+
 
 #pragma mark - segue
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(NSIndexPath*)sender {

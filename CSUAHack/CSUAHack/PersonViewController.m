@@ -31,18 +31,53 @@
     
     [self configureBump];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]];
+    
     // add to calendar
     UIBarButtonItem* syncButton = [[UIBarButtonItem alloc] initWithTitle:@"Sync all to iCal" style:UIBarButtonItemStylePlain target:self action:@selector(syncEvents)];
     self.navigationItem.rightBarButtonItem = syncButton;
     
     self.allEvents = [[NSMutableArray alloc] init];
- //   [self.allEvents addObject:@"Event test"];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self.tableView setRowHeight:75];
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     [self.tableView setBackgroundView:nil];
     [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:@"EventCell"];
+}
+-(void) viewWillAppear:(BOOL)animated {
+    [self.connectionInfo setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO];
+}
+- (IBAction)share:(id)sender {
+    NSLog(@"allEvents: %@", self.allEvents);
+    if ([self.allEvents count] == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No events to share!" message:@"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else {
+        
+    NSString *textShare = @"I discovered some cool events including ";
+    
+    NSMutableArray* copy = [[NSMutableArray alloc] init];
+    [copy addObjectsFromArray:self.allEvents];
+    for (EventObj* event in copy) {
+        NSString* toAdd = event.eventName;
+        textShare = [[textShare stringByAppendingString:toAdd] stringByAppendingString:@", "];
+    }
+    textShare = [textShare substringToIndex:[textShare length] - 2];
+    textShare = [textShare stringByAppendingString:@". Check out this app called EventMe!"];
+    
+    NSArray *activityItems = @[textShare];
+    UIActivityViewController *avc =
+    [[UIActivityViewController alloc]
+     initWithActivityItems:activityItems applicationActivities:nil];
+    
+    NSArray* exclude = @[UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard];
+    avc.excludedActivityTypes = exclude;
+    [self presentViewController:avc animated:YES completion:nil];
+    
+    }
 }
 - (void) configureBump {
     // userID is a string that you could use as the user's name, or an ID that is semantic within your environment
@@ -55,6 +90,7 @@
     
     [[BumpClient sharedClient] setChannelConfirmedBlock:^(BumpChannelID channel) {
         NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
+        [self.connectionInfo setHidden:YES];
         self.connectedState.text = @"Connected";
     }];
     
@@ -90,6 +126,19 @@
 #pragma tableview methods
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"Events Received";
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {// custom view for header. will be adjusted to default or specified header height
+    UILabel* headerLabel = [[UILabel alloc] init];
+    headerLabel.frame = CGRectMake(30, 0, 300, 40);
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = [UIColor blackColor];
+    headerLabel.font = [UIFont boldSystemFontOfSize:18];
+    headerLabel.text = @"   Events Received";
+    headerLabel.textColor = [UIColor whiteColor];
+    // headerLabel.textAlignment = NSTextAlignmentCenter;
+    UIView* view = [[UIView alloc] init];
+    [view setBackgroundColor:[UIColor greenColor]];
+    return headerLabel;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -141,27 +190,36 @@
         NSLog(@"result: %d", [self.store saveEvent:event span:EKSpanThisEvent commit:YES error:&error]);
         NSLog(@"error is: %@", error);
     }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Successfully added all events!" message:@"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (void)eventEditViewController:(EKEventEditViewController *)controller didCompleteWithAction:(EKEventEditViewAction)action {
     switch (action) {
 		case EKEventEditViewActionCanceled:
+        {
 			// Adding the event was cancelled.
             NSLog(@"CANCELLED");
 			break;
-            
+        }
 		case EKEventEditViewActionSaved:
+        {
 			// The event was saved
             NSLog(@"SAVED");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Successfully added event!" message:@"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert show];
 			break;
-            
+        }
 		case EKEventEditViewActionDeleted:
+        {
 			// The event was deleted
             NSLog(@"DELETED");
 			break;
-            
+        }
 		default:
+        {
 			break;
+        }
 	}
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -26,6 +26,7 @@
 @implementation OrgPersonViewController
 @synthesize allEvents = _allEvents, selectedIndexes = _selectedIndexes;
 @synthesize orgObj = _orgObj, tableView = _tableView;
+@synthesize connectedDescription = _connectedDescription;
 
 - (void)viewDidLoad
 {
@@ -35,6 +36,8 @@
     self.navigationItem.rightBarButtonItem = sendButton;
     
     [self configureBump];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]];
 
     self.allEvents = [[NSMutableArray alloc] init];
     self.selectedIndexes = [[NSMutableArray alloc] init];
@@ -42,8 +45,10 @@
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self.tableView setRowHeight:75];
+
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     [self.tableView setBackgroundView:nil];
+    
     [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:@"EventCell"];
 }
 -(void) sendEvents {
@@ -56,6 +61,8 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
+    [self.connectedDescription setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO];
     self.navigationItem.title= self.orgObj.orgName;
     [[ServerManager sharedManager] getEventsForOrganization:self.orgObj.orgID delegate:self];
 }
@@ -73,6 +80,7 @@
         NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
         connectedChannel = channel;
         self.connectedState.text = @"Connected";
+        [self.connectedDescription setHidden:YES];
     }];
     
     [[BumpClient sharedClient] setDataReceivedBlock:^(BumpChannelID channel, NSData *data) {
@@ -113,6 +121,19 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"Events";
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {// custom view for header. will be adjusted to default or specified header height
+    UILabel* headerLabel = [[UILabel alloc] init];
+    headerLabel.frame = CGRectMake(30, 0, 300, 40);
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = [UIColor blackColor];
+    headerLabel.font = [UIFont boldSystemFontOfSize:18];
+    headerLabel.text = @"   Events";
+    headerLabel.textColor = [UIColor whiteColor];
+    // headerLabel.textAlignment = NSTextAlignmentCenter;
+    UIView* view = [[UIView alloc] init];
+    [view setBackgroundColor:[UIColor greenColor]];
+    return headerLabel;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

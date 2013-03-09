@@ -14,5 +14,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *connectedState;
 @property (strong, nonatomic) IBOutlet UILabel *connectionInfo;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIButton *shareButton;
 
 @end

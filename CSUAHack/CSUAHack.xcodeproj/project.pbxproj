@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		CB39F6FC16EB12E3007FDDBD /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB39F6FB16EB12E3007FDDBD /* EventKit.framework */; };
+		CB3AFDAA16EB679800AB88AF /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3AFDA916EB679800AB88AF /* Background.png */; };
+		CB3AFDB216EB6ECA00AB88AF /* AppTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3AFDB116EB6ECA00AB88AF /* AppTitle.png */; };
+		CB3AFDB516EB792400AB88AF /* 212-action2.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3AFDB316EB792400AB88AF /* 212-action2.png */; };
+		CB3AFDB616EB792400AB88AF /* 212-action2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3AFDB416EB792400AB88AF /* 212-action2@2x.png */; };
+		CB3AFDB816EB7A5300AB88AF /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3AFDB716EB7A5300AB88AF /* Social.framework */; };
 		CB729E3316EAEE8B000025F2 /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB729E3216EAEE8B000025F2 /* PersonViewController.m */; };
 		CB729E3616EAEE97000025F2 /* OrgPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB729E3516EAEE97000025F2 /* OrgPersonViewController.m */; };
 		CB729E3916EAEEA4000025F2 /* SelectOrgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB729E3816EAEEA4000025F2 /* SelectOrgViewController.m */; };
@@ -36,6 +41,11 @@
 
 /* Begin PBXFileReference section */
 		CB39F6FB16EB12E3007FDDBD /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		CB3AFDA916EB679800AB88AF /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		CB3AFDB116EB6ECA00AB88AF /* AppTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppTitle.png; sourceTree = "<group>"; };
+		CB3AFDB316EB792400AB88AF /* 212-action2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "212-action2.png"; sourceTree = "<group>"; };
+		CB3AFDB416EB792400AB88AF /* 212-action2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "212-action2@2x.png"; sourceTree = "<group>"; };
+		CB3AFDB716EB7A5300AB88AF /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		CB729E3116EAEE8B000025F2 /* PersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonViewController.h; sourceTree = "<group>"; };
 		CB729E3216EAEE8B000025F2 /* PersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonViewController.m; sourceTree = "<group>"; };
 		CB729E3416EAEE97000025F2 /* OrgPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrgPersonViewController.h; sourceTree = "<group>"; };
@@ -82,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB3AFDB816EB7A5300AB88AF /* Social.framework in Frameworks */,
 				CBBE688B16EB1C6E00E3B69A /* EventKitUI.framework in Frameworks */,
 				CB39F6FC16EB12E3007FDDBD /* EventKit.framework in Frameworks */,
 				CBFE001316EADFA90010E8B7 /* AudioToolbox.framework in Frameworks */,
@@ -97,6 +108,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB3AFDA216EB64A400AB88AF /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				CB3AFDB316EB792400AB88AF /* 212-action2.png */,
+				CB3AFDB416EB792400AB88AF /* 212-action2@2x.png */,
+				CB3AFDB116EB6ECA00AB88AF /* AppTitle.png */,
+				CB3AFDA916EB679800AB88AF /* Background.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		CB729E2E16EAEE5F000025F2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +194,7 @@
 		CBFEFFE516EADDCF0010E8B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB3AFDB716EB7A5300AB88AF /* Social.framework */,
 				CBBE688A16EB1C6E00E3B69A /* EventKitUI.framework */,
 				CB39F6FB16EB12E3007FDDBD /* EventKit.framework */,
 				CBFE001216EADFA90010E8B7 /* AudioToolbox.framework */,
@@ -200,6 +223,7 @@
 		CBFEFFED16EADDCF0010E8B7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CB3AFDA216EB64A400AB88AF /* Images */,
 				CB729E4316EAFAB4000025F2 /* ServerHandling */,
 				CB729E3016EAEE71000025F2 /* Custom Views */,
 				CB729E2F16EAEE6A000025F2 /* Model */,
@@ -271,6 +295,10 @@
 				CBFEFFFB16EADDCF0010E8B7 /* Default@2x.png in Resources */,
 				CBFEFFFD16EADDCF0010E8B7 /* Default-568h@2x.png in Resources */,
 				CBFE000016EADDCF0010E8B7 /* MainStoryboard.storyboard in Resources */,
+				CB3AFDAA16EB679800AB88AF /* Background.png in Resources */,
+				CB3AFDB216EB6ECA00AB88AF /* AppTitle.png in Resources */,
+				CB3AFDB516EB792400AB88AF /* 212-action2.png in Resources */,
+				CB3AFDB616EB792400AB88AF /* 212-action2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

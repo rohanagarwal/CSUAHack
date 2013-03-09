@@ -5,7 +5,10 @@
 
 #define kGetEvents @"http://ec2-50-18-129-223.us-west-1.compute.amazonaws.com/api/org_events/"
 
+#define kPostAnalytic @"http://ec2-50-18-129-223.us-west-1.compute.amazonaws.com/api/analytics/"
+
 typedef enum {
 	ServerConnectionTypeGetOrganizations,
-	ServerConnectionTypeGetEvents
+	ServerConnectionTypeGetEvents,
+    ServerConnectionTypePostAnalytic
 } ServerConnectionType;

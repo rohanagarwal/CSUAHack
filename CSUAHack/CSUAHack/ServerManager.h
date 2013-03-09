@@ -29,6 +29,7 @@
 
 -(void) getOrganizations:(id<ServerRequestDelegate>) delegate;
 -(void) getEventsForOrganization:(NSNumber*) orgID delegate:(id<ServerRequestDelegate>) delegate;
+-(void) postAnalytic:(NSMutableArray*)allEvents;
 // -(void) postEventAnalytic:(NSString*) organizationName...
 
 

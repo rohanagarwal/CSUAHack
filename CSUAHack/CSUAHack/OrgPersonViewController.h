@@ -12,6 +12,7 @@
 
 @interface OrgPersonViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ServerRequestDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *connectedState;
+@property (strong, nonatomic) IBOutlet UILabel *connectedDescription;
 
 @property (strong, nonatomic) OrganizationObj* orgObj;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

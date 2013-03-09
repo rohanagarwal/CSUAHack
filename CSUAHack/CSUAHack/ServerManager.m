@@ -15,11 +15,12 @@
 
 @property (strong, nonatomic) ServerConnection* getOrganizations;
 @property (strong, nonatomic) ServerConnection* getEvents;
+@property (strong, nonatomic) ServerConnection* postAnalytic;
 
 @end
 
 @implementation ServerManager
-@synthesize getOrganizations = _getOrganizations, getEvents = _getEvents;
+@synthesize getOrganizations = _getOrganizations, getEvents = _getEvents, postAnalytic = _postAnalytic;
 
 
 #pragma mark - Singleton Enforcement
@@ -74,7 +75,37 @@ static ServerManager *sharedManager = nil;
 	if(self.getEvents.connection == nil)
 		NSLog(@"Connection error. Couldn't initialize connection with url: %@", requestString);
 }
+-(void) postAnalytic:(NSMutableArray*)allEvents {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    self.postAnalytic = [[ServerConnection alloc] init];
+    self.postAnalytic.type = ServerConnectionTypeGetEvents;
+    self.postAnalytic.responseData = [[NSMutableData alloc] init];
+    NSString *requestString = kPostAnalytic;
 
+    
+    NSMutableURLRequest* urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+    [urlRequest setHTTPMethod:@"POST"];
+    
+    NSMutableArray* allPostEvents = [[NSMutableArray alloc] init];
+    for (EventObj* event in allEvents) {
+        NSMutableDictionary* postDict = [[NSMutableDictionary alloc] init];
+        [postDict setValue:event.eventName forKey:@"event_name"];
+        [allPostEvents addObject:postDict];
+    }
+    NSError *error;
+    NSData* postData = [NSJSONSerialization dataWithJSONObject:allPostEvents
+                                                                           options:NSJSONWritingPrettyPrinted
+                                                                             error:&error];
+    [urlRequest setHTTPBody:postData];
+    NSMutableDictionary* mediaType = [[NSMutableDictionary alloc] init];
+    [mediaType setValue:@"application/json" forKey:@"content-type"];
+    [urlRequest setAllHTTPHeaderFields:mediaType];
+
+	self.postAnalytic.request = urlRequest;
+	self.postAnalytic.connection = [NSURLConnection connectionWithRequest:self.postAnalytic.request delegate:self];
+	if(self.getEvents.connection == nil)
+		NSLog(@"Connection error. Couldn't initialize connection with url: %@", requestString);
+}
 #pragma mark - NSURLConnection methods
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -83,6 +114,9 @@ static ServerManager *sharedManager = nil;
     }
     else if (connection == self.getEvents.connection) {
         [self.getEvents.responseData appendData:data];
+    }
+    else if (connection == self.postAnalytic.connection) {
+        [self.postAnalytic.responseData appendData:data];
     }
     else {
         NSLog(@"invalid connection type in didRecieveData, programmer error");
@@ -96,6 +130,9 @@ static ServerManager *sharedManager = nil;
     else if (connection == self.getEvents.connection) {
         self.getEvents.response = response;
     }
+    else if (connection == self.postAnalytic.connection) {
+        self.postAnalytic.response = response;
+    }
     else {
         NSLog(@"invalid connection type in didReceiveResponse, programmer error");
     }
@@ -108,6 +145,9 @@ static ServerManager *sharedManager = nil;
     }
     else if (urlConnection == self.getEvents.connection) {
         connection = self.getEvents;
+    }
+    else if (urlConnection == self.postAnalytic.connection) {
+        connection = self.postAnalytic;
     }
     else {
         NSLog(@"invalid connection type in didFailWithError, programmer error");
@@ -124,6 +164,9 @@ static ServerManager *sharedManager = nil;
     }
     else if (urlConnection == self.getEvents.connection) {
         connection = self.getEvents;
+    }
+    else if (urlConnection == self.postAnalytic.connection) {
+        connection = self.postAnalytic;
     }
     else {
         NSLog(@"invalid connection type in didFinishLoading, programmer error");
@@ -200,6 +243,9 @@ static ServerManager *sharedManager = nil;
             [connection.delegate gotEventsForOrganization:allEvents];
         }
     }
+    else { // post analytic, don't do any handling cause doesn't matter
+        
+    }
     
     // nil the connection
     if(urlConnection == self.getOrganizations.connection) {
@@ -208,22 +254,14 @@ static ServerManager *sharedManager = nil;
     else if(urlConnection == self.getEvents.connection) {
         self.getEvents = nil;
     }
+    else if (urlConnection == self.postAnalytic.connection) {
+        self.postAnalytic = nil;
+    }
     else {
         NSLog(@"invalid connection type in releasing connections, programmer error");
     }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
-+ (NSDate *)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger) hour minute:(NSInteger) minute second:(NSInteger) second {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setYear:year];
-    [components setMonth:month];
-    [components setDay:day];
-    [components setHour:hour];
-    [components setMinute:minute];
-    [components setSecond:second];
-    return [calendar dateFromComponents:components];
-}
 
 @end
