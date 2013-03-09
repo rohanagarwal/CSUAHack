@@ -69,7 +69,7 @@
     }
     NSData* myData = [NSKeyedArchiver archivedDataWithRootObject:sendEvents];
     [[BumpClient sharedClient] sendData:myData toChannel:connectedChannel];
-    [[ServerManager sharedManager] postAnalytic:sendEvents];
+ //   [[ServerManager sharedManager] postAnalytic:sendEvents];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
